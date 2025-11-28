@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Internship_4_OOP2.Doimain.Common.Validation;
 
 namespace Internship_4_OOP2.Doimain.Common.Model
 {
