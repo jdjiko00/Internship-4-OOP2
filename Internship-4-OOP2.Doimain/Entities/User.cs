@@ -46,6 +46,18 @@ namespace Internship_4_OOP2.Doimain.Entities
             IsActive = true;
         }
 
+        public void Activate()
+        {
+            IsActive = true;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Deactivate()
+        {
+            IsActive = false;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
         public ValidationResult Validate()
         {
             var validationResult = new ValidationResult();
