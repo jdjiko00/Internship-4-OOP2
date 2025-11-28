@@ -10,16 +10,16 @@
             {
                 Code = $"{CodePrefix}1",
                 Message = "Ime ne smije biti prazno",
-                ValidationSeverity = ValidationSeverity.Error,
-                ValidationType = ValidationType.FormalValidation
+                ValidationSeverity = Enumerations.ValidationSeverity.Error,
+                ValidationType = Enumerations.ValidationType.FormalValidation
             };
 
             public static readonly ValidationItem NameMaxLenght = new ValidationItem
             {
                 Code = $"{CodePrefix}2",
                 Message = $"Ime ne smije biti duze od {Entities.Company.NameMaxLenght} znakova",
-                ValidationSeverity = ValidationSeverity.Error,
-                ValidationType = ValidationType.FormalValidation
+                ValidationSeverity = Enumerations.ValidationSeverity.Error,
+                ValidationType = Enumerations.ValidationType.FormalValidation
             };
         }
     }
