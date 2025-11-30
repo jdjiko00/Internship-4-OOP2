@@ -1,4 +1,4 @@
-﻿namespace Internship_4_OOP2.Application.Users
+﻿namespace Internship_4_OOP2.Application.Users.CreateUser
 {
     public class CreateUserRequest
     {
