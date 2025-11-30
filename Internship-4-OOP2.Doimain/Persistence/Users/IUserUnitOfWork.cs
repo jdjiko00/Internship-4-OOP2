@@ -1,6 +1,8 @@
-﻿namespace Internship_4_OOP2.Doimain.Persistence.Users
+﻿using Internship_4_OOP2.Doimain.Persistence.Common;
+
+namespace Internship_4_OOP2.Doimain.Persistence.Users
 {
-    public interface IUserUnitOfWork
+    public interface IUserUnitOfWork : IUnitOfWork
     {
         IUserRepository UserRepository { get; }
     }
