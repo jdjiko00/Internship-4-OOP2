@@ -1,18 +1,18 @@
 ﻿using Internship_4_OOP2.Application.Common.Model;
 using Internship_4_OOP2.Doimain.Persistence.Users;
 
-namespace Internship_4_OOP2.Application.Users.DeleteUser
+namespace Internship_4_OOP2.Application.Users.ActivateUser
 {
-    internal class DeleteUserHandler : RequestHandler<DeleteUserRequest, SuccessPostResponse>
+    internal class ActivateUserHandler : RequestHandler<ActivateUserRequest, SuccessPostResponse>
     {
         private readonly IUserUnitOfWork _unitOfWork;
 
-        public DeleteUserHandler(IUserUnitOfWork unitOfWork)
+        public ActivateUserHandler(IUserUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        protected override async Task HandleRequest(DeleteUserRequest request, Result<SuccessPostResponse> result)
+        protected override async Task HandleRequest(ActivateUserRequest request, Result<SuccessPostResponse> result)
         {
             var user = await _unitOfWork.UserRepository.GetById(request.Id);
             if (user == null)
@@ -29,7 +29,8 @@ namespace Internship_4_OOP2.Application.Users.DeleteUser
                 return;
             }
 
-            await _unitOfWork.UserRepository.DeleteAsync(request.Id);
+            user.Activate();
+            _unitOfWork.UserRepository.Update(user);
             await _unitOfWork.SaveAsync();
 
             result.SetResult(new SuccessPostResponse(true));

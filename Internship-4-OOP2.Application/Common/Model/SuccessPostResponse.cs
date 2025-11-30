@@ -4,7 +4,7 @@
     {
         public int? Id { get; init; }
 
-        public SuccessPostResponse(bool isSuccess, int? id) : base (isSuccess)
+        public SuccessPostResponse(bool isSuccess, int? id = null) : base (isSuccess)
         {
             Id = id;
         }
