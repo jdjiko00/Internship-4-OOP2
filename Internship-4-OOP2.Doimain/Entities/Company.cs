@@ -15,6 +15,11 @@ namespace Internship_4_OOP2.Doimain.Entities
             Name = name;
         }
 
+        public void UpdateBasicInfo(string name)
+        {
+            Name = name;
+        }
+
         public ValidationResult Validate()
         {
             var validationResult = new ValidationResult();
