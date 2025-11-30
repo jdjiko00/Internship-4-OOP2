@@ -1,0 +1,10 @@
+﻿namespace Internship_4_OOP2.Infrastructure.Common.Caching
+{
+    public interface IMemoryCacheService
+    {
+        Task<T?> GetAsync<T>(string key);
+        Task SetAsync<T>(string key, T value, TimeSpan? absoluteExpiration = null);
+        Task RemoveAsync(string key);
+        Task<bool> ExistsAsync(string key);
+    }
+}
