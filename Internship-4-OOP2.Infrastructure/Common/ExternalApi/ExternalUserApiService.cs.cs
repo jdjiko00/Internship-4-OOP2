@@ -1,5 +1,6 @@
-﻿using Internship_4_OOP2.Doimain.Entities;
-using Internship_4_OOP2.Doimain.Persistence.Users;
+﻿using Internship_4_OOP2.Application.Common.Interfaces;
+using Internship_4_OOP2.Doimain.Entities;
+using Internship_4_OOP2.Infrastructure.Common.Caching;
 using System.Net.Http.Json;
 
 namespace Internship_4_OOP2.Infrastructure.Common.ExternalApi
@@ -8,66 +9,48 @@ namespace Internship_4_OOP2.Infrastructure.Common.ExternalApi
     {
         private const string CacheKey = "ExternalUsersCache";
         private readonly HttpClient _httpClient;
-        private readonly IMemoryCacheService _cache;
-        private readonly IUserUnitOfWork _unitOfWork;
+        private readonly IMemoryCacheService _cacheService;
 
-        public ExternalUserApiService(HttpClient httpClient,
-                                      IMemoryCacheService cache,
-                                      IUserUnitOfWork unitOfWork)
+        public ExternalUserApiService(HttpClient httpClient, IMemoryCacheService cacheService)
         {
             _httpClient = httpClient;
-            _cache = cache;
-            _unitOfWork = unitOfWork;
+            _cacheService = cacheService;
         }
 
-        public async Task<IEnumerable<User>> GetExternalUsersAsync()
+        public async Task<List<User>> GetExternalUsersAsync()
         {
-            if (_cache.TryGetValue<IEnumerable<User>>(CacheKey, out var cachedUsers))
-            {
-                return cachedUsers;
-            }
+            var cached = await _cacheService.GetAsync<List<User>>(CacheKey);
+            if (cached != null)
+                return cached;
 
             var response = await _httpClient.GetAsync("https://jsonplaceholder.typicode.com/users");
 
             if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException("Vanjski API nije dostupan.", null, response.StatusCode);
-            }
+                throw new HttpRequestException("Vanjski API nije dostupan", null, response.StatusCode);
 
             var externalUsers = await response.Content.ReadFromJsonAsync<List<ExternalUserDto>>();
 
-            if (externalUsers == null)
-                return new List<User>();
-
-            var usersToSave = new List<User>();
-
-            foreach (var external in externalUsers)
+            var mappedUsers = new List<User>();
+            foreach (var eu in externalUsers)
             {
-                var user = new User(
-                    external.Name,
-                    external.Username,
-                    external.Email,
-                    external.Address.Street,
-                    external.Address.City,
-                    external.Address.Geo.Lat,
-                    external.Address.Geo.Lng,
-                    external.Website
-                );
-
-                usersToSave.Add(user);
-
-                await _unitOfWork.UserRepository.InsertAsync(user);
+                mappedUsers.Add(new User(
+                    name: eu.Name,
+                    username: eu.Username,
+                    email: eu.Email,
+                    addressStreet: eu.Address?.Street,
+                    addressCity: eu.Address?.City,
+                    geoLat: decimal.Parse(eu.Address?.Geo?.Lat ?? "0"),
+                    geoLng: decimal.Parse(eu.Address?.Geo?.Lng ?? "0"),
+                    website: eu.Website
+                ));
             }
 
-            await _unitOfWork.SaveAsync();
+            var endOfDay = DateTime.Now.Date.AddDays(1);
+            var duration = endOfDay - DateTime.Now;
 
-            var now = DateTime.UtcNow;
-            var endOfDay = DateTime.UtcNow.Date.AddDays(1).AddTicks(-1);
-            var cacheDuration = endOfDay - now;
+            await _cacheService.SetAsync(CacheKey, mappedUsers, duration);
 
-            _cache.Set(CacheKey, usersToSave, cacheDuration);
-
-            return usersToSave;
+            return mappedUsers;
         }
 
         private class ExternalUserDto
@@ -75,21 +58,21 @@ namespace Internship_4_OOP2.Infrastructure.Common.ExternalApi
             public string Name { get; set; }
             public string Username { get; set; }
             public string Email { get; set; }
-            public ExternalAddress Address { get; set; }
+            public ExternalAddressDto Address { get; set; }
             public string Website { get; set; }
         }
 
-        private class ExternalAddress
+        private class ExternalAddressDto
         {
             public string Street { get; set; }
             public string City { get; set; }
-            public ExternalGeo Geo { get; set; }
+            public ExternalGeoDto Geo { get; set; }
         }
 
-        private class ExternalGeo
+        private class ExternalGeoDto
         {
-            public decimal Lat { get; set; }
-            public decimal Lng { get; set; }
+            public string Lat { get; set; }
+            public string Lng { get; set; }
         }
     }
 }

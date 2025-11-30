@@ -7,38 +7,33 @@ namespace Internship_4_OOP2.Infrastructure.Companies
     public class CompanyUnitOfWork : ICompanyUnitOfWork
     {
         private readonly CompanyDbContext _dbContext;
-        private IDbContextTransaction? _transaction;
 
-        public ICompanyRepository CompanyRepository { get; }
-
-        public CompanyUnitOfWork(CompanyDbContext dbContext, ICompanyRepository companyRepository)
+        public CompanyUnitOfWork(CompanyDbContext dbContext)
         {
             _dbContext = dbContext;
-            CompanyRepository = companyRepository;
+            CompanyRepository = new CompanyRepository(_dbContext);
         }
 
-        public async Task CreateTransactions()
-        {
-            _transaction = await _dbContext.Database.BeginTransactionAsync();
-        }
-
-        public async Task Commit()
-        {
-            await _dbContext.SaveChangesAsync();
-
-            if (_transaction != null)
-                await _transaction.CommitAsync();
-        }
-
-        public async Task Rollback()
-        {
-            if (_transaction != null)
-                await _transaction.RollbackAsync();
-        }
+        public ICompanyRepository CompanyRepository { get; }
 
         public async Task SaveAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task CreateTransactions()
+        {
+            await _dbContext.Database.BeginTransactionAsync();
+        }
+
+        public async Task Commit()
+        {
+            await _dbContext.Database.CommitTransactionAsync();
+        }
+
+        public async Task Rollback()
+        {
+            await _dbContext.Database.RollbackTransactionAsync();
         }
     }
 }
