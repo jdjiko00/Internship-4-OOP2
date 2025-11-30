@@ -58,6 +58,14 @@ namespace Internship_4_OOP2.Doimain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
+        public void UpdateBasicInfo(string name, string email, string? website)
+        {
+            Name = name;
+            Email = email;
+            Website = website;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
         public ValidationResult Validate()
         {
             var validationResult = new ValidationResult();
