@@ -1,6 +1,4 @@
-﻿using Internship_4_OOP2.Application.Common.Model;
-
-namespace Internship_4_OOP2.Application.User
+﻿namespace Internship_4_OOP2.Application.Users
 {
     public class CreateUserRequest
     {
@@ -12,9 +10,5 @@ namespace Internship_4_OOP2.Application.User
         public decimal GeoLat { get; set; }
         public decimal GeoLng { get; set; }
         public string? Website { get; set; }
-    }
-    internal class CreateUserRequestHandler : RequestHandler<CreateUserRequest, SuccessPostResponse>
-    {
-
     }
 }
