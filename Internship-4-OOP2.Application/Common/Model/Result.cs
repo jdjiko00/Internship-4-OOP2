@@ -39,7 +39,23 @@ namespace Internship_4_OOP2.Application.Common.Model
 
         public void SetValidationResult(ValidationResult validationResult)
         {
-            _infos?.AddRange(validationResult.ValidationItems.Where(x => x.ValidationSeverity == Doimain.Common.Validation.Enumerations.ValidationSeverity.Error).Select(x => ValidationResultItem.FromValidationItem(x));
+            _infos?.AddRange(validationResult.ValidationItems
+                .Where(validationResult => validationResult.ValidationSeverity == Doimain.Common.Validation.Enumerations.ValidationSeverity.Info)
+                .Select(validationItem => ValidationResultItem.FromValidationItem(validationItem)));
+
+            _warnings?.AddRange(validationResult.ValidationItems
+                .Where(validationResult => validationResult.ValidationSeverity == Doimain.Common.Validation.Enumerations.ValidationSeverity.Warning)
+                .Select(validationItem => ValidationResultItem.FromValidationItem(validationItem)));
+
+            _errors?.AddRange(validationResult.ValidationItems
+                .Where(validationResult => validationResult.ValidationSeverity == Doimain.Common.Validation.Enumerations.ValidationSeverity.Error)
+                .Select(validationItem => ValidationResultItem.FromValidationItem(validationItem)));
+        }
+
+        public void SetUnauthorizedResult()
+        {
+            Value = null;
+            IsAuthorized = false;
         }
     }
 }

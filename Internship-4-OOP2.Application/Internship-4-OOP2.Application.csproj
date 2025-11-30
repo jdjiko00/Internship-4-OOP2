@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Internship-4-OOP2.Doimain\Internship-4-OOP2.Doimain.csproj" />
+  </ItemGroup>
+
 </Project>

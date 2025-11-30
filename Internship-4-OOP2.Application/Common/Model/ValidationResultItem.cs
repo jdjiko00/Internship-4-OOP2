@@ -1,4 +1,5 @@
-﻿using Internship_4_OOP2.Doimain.Common.Validation.Enumerations;
+﻿using Internship_4_OOP2.Doimain.Common.Validation;
+using Internship_4_OOP2.Doimain.Common.Validation.Enumerations;
 
 namespace Internship_4_OOP2.Application.Common.Model
 {
@@ -9,7 +10,7 @@ namespace Internship_4_OOP2.Application.Common.Model
         public string Code { get; set; }
         public string Message { get; set; }
 
-        public static ValidationResultItem FromValidationItem(ValidationResultItem item)
+        public static ValidationResultItem FromValidationItem(ValidationItem item)
         {
             return new ValidationResultItem
             {
