@@ -1,5 +1,6 @@
 ﻿using Internship_4_OOP2.Doimain.Common.Validation;
 using Internship_4_OOP2.Doimain.Common.Validation.ValidationItems;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Internship_4_OOP2.Doimain.Entities
 {
@@ -10,24 +11,41 @@ namespace Internship_4_OOP2.Doimain.Entities
         public const int EmailMaxLenght = 255;
         public const int AddressStreetMaxLenght = 150;
         public const int AddressCityMaxLenght = 100;
-        public const decimal GeoLatMaxRange = 90m;
-        public const decimal GeoLngMaxRange = 180m;
+        public const decimal GeoLatMaxRange = 90;
+        public const decimal GeoLngMaxRange = 180;
         public const int WebsiteMaxLenght = 100;
         public const int PasswordMaxLenght = 100;
 
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string Username { get; private set; }
-        public string Email { get; private set; }
-        public string AddressStreet { get; private set; }
-        public string AddressCity { get; private set; }
-        public decimal GeoLat { get; private set; }
-        public decimal GeoLng { get; private set; }
-        public string? Website { get; private set; }
-        public string Password { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
-        public bool IsActive { get; private set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Username { get; set; }
+
+        [Column("email")]
+        public string Email { get; set; }
+
+        [Column("address_street")]
+        public string AddressStreet { get; set; }
+
+        [Column("address_city")]
+        public string AddressCity { get; set; }
+
+        [Column("geo_lat")]
+        public decimal GeoLat { get; set; }
+
+        [Column("geo_lng")]
+        public decimal GeoLng { get; set; }
+
+        public string Website { get; set; }
+        public string Password { get; set; }
+
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
+
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+
+        [Column("is_active")]
+        public bool IsActive { get; set; }
 
         public User (string name, string username, string email, string addressStreet, string addressCity, decimal geoLat, decimal geoLng, string? website)
         {
@@ -44,6 +62,11 @@ namespace Internship_4_OOP2.Doimain.Entities
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
             IsActive = true;
+        }
+
+        public User()
+        {
+            
         }
 
         public void Activate()

@@ -7,4 +7,14 @@
     <RootNamespace>Internship_4_OOP2.Api</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Internship-4-OOP2.Application\Internship-4-OOP2.Application.csproj" />
+    <ProjectReference Include="..\Internship-4-OOP2.Infrastructure\Internship-4-OOP2.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,63 +5,30 @@ namespace Internship_4_OOP2.Infrastructure.Common.DbContexts
 {
     public class UserDbContext : DbContext
     {
-        public UserDbContext(DbContextOptions<UserDbContext> options)
-            : base(options)
-        {
-        }
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().ToTable("users");
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasKey(u => u.Id);
+            modelBuilder.Entity<User>().Property(u => u.Email).HasColumnName("email");
+            modelBuilder.Entity<User>().Property(u => u.AddressStreet).HasColumnName("address_street");
+            modelBuilder.Entity<User>().Property(u => u.AddressCity).HasColumnName("address_city");
 
-                entity.Property(u => u.Name)
-                      .IsRequired()
-                      .HasMaxLength(User.NameMaxLenght);
+            modelBuilder.Entity<User>().Property(u => u.GeoLat)
+                .HasColumnName("geo_lat")
+                .HasColumnType("numeric");
+            modelBuilder.Entity<User>().Property(u => u.GeoLng)
+                .HasColumnName("geo_lng")
+                .HasColumnType("numeric");
 
-                entity.Property(u => u.Username)
-                      .IsRequired()
-                      .HasMaxLength(User.UsernameMaxLenght);
-
-                entity.Property(u => u.Email)
-                      .IsRequired()
-                      .HasMaxLength(User.EmailMaxLenght);
-
-                entity.Property(u => u.AddressStreet)
-                      .IsRequired()
-                      .HasMaxLength(User.AddressStreetMaxLenght);
-
-                entity.Property(u => u.AddressCity)
-                      .IsRequired()
-                      .HasMaxLength(User.AddressCityMaxLenght);
-
-                entity.Property(u => u.GeoLat)
-                      .IsRequired();
-
-                entity.Property(u => u.GeoLng)
-                      .IsRequired();
-
-                entity.Property(u => u.Website)
-                      .HasMaxLength(User.WebsiteMaxLenght);
-
-                entity.Property(u => u.Password)
-                      .IsRequired()
-                      .HasMaxLength(User.PasswordMaxLenght);
-
-                entity.Property(u => u.IsActive)
-                      .HasDefaultValue(true);
-
-                entity.Property(u => u.CreatedAt)
-                      .HasDefaultValueSql("GETUTCDATE()");
-
-                entity.Property(u => u.UpdatedAt)
-                      .HasDefaultValueSql("GETUTCDATE()");
-            });
+            modelBuilder.Entity<User>().Property(u => u.Website).HasColumnName("website");
+            modelBuilder.Entity<User>().Property(u => u.Password).HasColumnName("password");
+            modelBuilder.Entity<User>().Property(u => u.CreatedAt).HasColumnName("created_at");
+            modelBuilder.Entity<User>().Property(u => u.UpdatedAt).HasColumnName("updated_at");
+            modelBuilder.Entity<User>().Property(u => u.IsActive).HasColumnName("is_active");
         }
     }
 }

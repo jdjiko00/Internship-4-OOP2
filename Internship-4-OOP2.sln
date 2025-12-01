@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-4-OOP2.Applicati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-4-OOP2.Infrastructure", "Internship-4-OOP2.Infrastructure\Internship-4-OOP2.Infrastructure.csproj", "{0D653EB1-BD5C-4931-BEA3-483003358C49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship-4-OOP2.Api", "Internship-4-OOP2.Api\Internship-4-OOP2.Api.csproj", "{4D13B460-1DD9-4A16-8398-62F2FE204063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{0D653EB1-BD5C-4931-BEA3-483003358C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D653EB1-BD5C-4931-BEA3-483003358C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D653EB1-BD5C-4931-BEA3-483003358C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D13B460-1DD9-4A16-8398-62F2FE204063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D13B460-1DD9-4A16-8398-62F2FE204063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D13B460-1DD9-4A16-8398-62F2FE204063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D13B460-1DD9-4A16-8398-62F2FE204063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{219CAF04-068F-4FAE-B032-279AE34ADBF1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FCEEFCA3-CD26-48A7-B19F-B84671C60FF0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{0D653EB1-BD5C-4931-BEA3-483003358C49} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{4D13B460-1DD9-4A16-8398-62F2FE204063} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2927D721-955E-4F04-9A8C-BD091F44C2D7}

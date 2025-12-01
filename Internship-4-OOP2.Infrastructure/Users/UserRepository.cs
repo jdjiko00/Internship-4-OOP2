@@ -23,14 +23,27 @@ namespace Internship_4_OOP2.Infrastructure.Users
         {
             using var connection = new NpgsqlConnection(_connectionString);
             var sql = @"
-                SELECT Id, Name, Username, Email, AddressStreet, AddressCity, GeoLat, GeoLng, Website, Password, CreatedAt, UpdatedAt, IsActive
-                FROM Users
+                SELECT 
+                    id,
+                    name,
+                    username,
+                    email,
+                    address_street AS ""AddressStreet"",
+                    address_city AS ""AddressCity"",
+                    geo_lat AS ""GeoLat"",
+                    geo_lng AS ""GeoLng"",
+                    website,
+                    password,
+                    created_at AS ""CreatedAt"",
+                    updated_at AS ""UpdatedAt"",
+                    is_active AS ""IsActive""
+                FROM users
             ";
             var users = await connection.QueryAsync<User>(sql);
 
             return new GetAllResponse<User>
             {
-                Values = users
+                Values = users.ToList()
             };
         }
 
@@ -38,9 +51,22 @@ namespace Internship_4_OOP2.Infrastructure.Users
         {
             using var connection = new NpgsqlConnection(_connectionString);
             var sql = @"
-                SELECT Id, Name, Username, Email, AddressStreet, AddressCity, GeoLat, GeoLng, Website, Password, CreatedAt, UpdatedAt, IsActive
-                FROM Users
-                WHERE Id = @Id
+                SELECT 
+                    id,
+                    name,
+                    username,
+                    email,
+                    address_street AS ""AddressStreet"",
+                    address_city AS ""AddressCity"",
+                    geo_lat AS ""GeoLat"",
+                    geo_lng AS ""GeoLng"",
+                    website,
+                    password,
+                    created_at AS ""CreatedAt"",
+                    updated_at AS ""UpdatedAt"",
+                    is_active AS ""IsActive""
+                FROM users
+                WHERE id = @Id
             ";
             return await connection.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
         }
